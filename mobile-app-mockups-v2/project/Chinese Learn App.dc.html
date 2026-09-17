@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="_ds/broadsheet-c405fe5c-8c19-4889-be17-9c057f1bc4b5/styles.css">
+  <script src="_ds/broadsheet-c405fe5c-8c19-4889-be17-9c057f1bc4b5/_ds_bundle.js"></script>
+  <style>
+    body{margin:0;background:var(--color-bg)}
+    a{color:var(--color-accent-700);text-decoration:none}
+    a:hover{color:var(--color-accent-900)}
+    .scr-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .scr-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--color-divider)}
+    .scr-meta-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--color-divider);font-size:13px}
+  </style>
+</helmet>
+
+<div style="padding:56px 40px 100px;font-family:var(--font-body);color:var(--color-text)">
+  <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:8px">Thiết kế màn hình · Broadsheet</div>
+  <h1 style="font-size:36px;margin:0 0 8px">Học tiếng Trung</h1>
+  <p style="font-size:15px;color:var(--color-neutral-700);max-width:520px;margin:0 0 48px">Ứng dụng học từ vựng tiếng Trung với ôn tập lặp lại cách quãng (SRS) — mười hai màn hình chính, cho một người tự học ở trình độ HSK 1–3.</p>
+
+  <div style="display:flex;gap:36px;overflow-x:auto;padding-bottom:20px">
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">00 · Onboarding</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 40px;height:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between">
+          <div>
+            <div style="font-style:italic;font-size:16px;color:var(--color-accent-700);margin-bottom:8px">Học tiếng Trung</div>
+            <h1 style="font-size:38px;line-height:1.15;margin:0 0 16px">Từ vựng &amp; ôn tập ngắt quãng.</h1>
+            <p style="font-size:15px;line-height:1.6;color:var(--color-neutral-700);max-width:280px;margin:0">Học từ mới mỗi ngày, ôn lại đúng lúc trước khi quên — theo thuật toán lặp lại cách quãng.</p>
+          </div>
+          <div>
+            <h6 style="color:var(--color-neutral-600)">Chọn cấp độ HSK</h6>
+            <div class="seg" style="margin:10px 0 24px;width:100%">
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk-ob" defaultChecked=""><span>HSK 1</span></label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk-ob"><span>HSK 2</span></label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk-ob"><span>HSK 3</span></label>
+            </div>
+            <h6 style="color:var(--color-neutral-600)">Mục tiêu mỗi ngày</h6>
+            <div class="seg" style="margin:10px 0 28px;width:100%">
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="goal-ob"><span>10 từ</span></label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="goal-ob" defaultChecked=""><span>20 từ</span></label>
+              <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="goal-ob"><span>40 từ</span></label>
+            </div>
+            <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Bắt đầu</button>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">01 · Tổng quan</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="height:100%;position:relative;box-sizing:border-box">
+        <div style="padding:54px 22px 90px;height:100%;overflow:auto;box-sizing:border-box">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600)">Thứ Ba · 16 Tháng 9</div>
+            <a href="#" class="btn btn-icon" aria-label="Cài đặt" style="color:var(--color-text)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"></circle><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path></svg>
+            </a>
+          </div>
+          <h1 style="font-size:30px;margin:0 0 10px">Học tiếng Trung</h1>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:26px">
+            <span style="font-size:14px;color:var(--color-neutral-700)">Trình độ hiện tại</span>
+            <span class="tag tag-accent">HSK 1</span>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+            <span style="font-size:13px;color:var(--color-neutral-700)">Mục tiêu · HSK 3</span>
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:22px">35%</span>
+          </div>
+          <div style="height:8px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden;margin-bottom:8px">
+            <div style="width:35%;height:100%;background:var(--color-accent)"></div>
+          </div>
+          <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:6px">157 / 450 từ đã thuộc — còn 293 từ để đạt HSK 3</div>
+          <a href="#2b" class="btn btn-ghost" style="padding-left:0;margin-bottom:26px">Đổi mục tiêu →</a>
+
+          <div style="display:flex;gap:12px;margin-bottom:24px">
+            <div class="card" style="flex:1">
+              <div class="card-kicker">Cần ôn</div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:26px">18</div>
+              <div class="card-body">từ hôm nay</div>
+            </div>
+            <div class="card" style="flex:1">
+              <div class="card-kicker">Streak</div>
+              <div style="font-family:var(--font-heading);font-weight:600;font-size:26px">7</div>
+              <div class="card-body">ngày liên tiếp</div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" style="height:48px;font-size:15px;margin-top:0">Ôn tập ngay</button>
+
+          <div style="margin-top:30px">
+            <h6 style="color:var(--color-neutral-600)">Gần đây</h6>
+            <div style="display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-divider)">
+              <div style="font-size:22px;font-family:var(--font-heading)">你好</div>
+              <div style="flex:1;font-size:13px;font-style:italic;color:var(--color-accent-700)">nǐ hǎo</div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">xin chào</div>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--color-divider)">
+              <div style="font-size:22px;font-family:var(--font-heading)">谢谢</div>
+              <div style="flex:1;font-size:13px;font-style:italic;color:var(--color-accent-700)">xièxiè</div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">cảm ơn</div>
+            </div>
+            <div style="display:flex;align-items:baseline;gap:12px;padding:10px 0">
+              <div style="font-size:22px;font-family:var(--font-heading)">时间</div>
+              <div style="flex:1;font-size:13px;font-style:italic;color:var(--color-accent-700)">shíjiān</div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">thời gian</div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--color-surface);border-top:1px solid var(--color-divider);display:flex">
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-accent-700)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 10.5V20h5v-6h2v6h5v-9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px;font-weight:600">Tổng quan</span></a>
+          <a href="#3a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c2-1.3 5-1.3 8 .5v13c-3-1.8-6-1.8-8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M20 5.5c-2-1.3-5-1.3-8 .5v13c3-1.8 6-1.8 8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span style="font-size:10px">Từ vựng</span></a>
+          <a href="#3b" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-2.9 6.1M20 12v5.5h-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Ôn tập</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><span style="font-size:17px;font-family:var(--font-heading);line-height:1">文</span><span style="font-size:10px;margin-top:1px">Ngữ pháp</span></a>
+        </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">02 · Đặt mục tiêu HSK</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 28px;height:100%;overflow:auto;box-sizing:border-box">
+          <svg width="9" height="16" viewBox="0 0 9 16"><path d="M8 1L1 8l7 7" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <h2 style="margin:18px 0 6px;font-size:26px">Mục tiêu HSK</h2>
+          <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 24px;max-width:300px">Chọn cấp độ bạn muốn đạt. Tiến độ ở Tổng quan sẽ tính theo mục tiêu này.</p>
+
+          <div style="display:flex;flex-direction:column;margin-bottom:28px">
+            <label class="radio" style="padding:12px 0;border-bottom:1px solid var(--color-divider)">
+              <input type="radio" name="hsk-goal">
+              <span class="dot"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-200);flex-shrink:0;margin-right:2px"></span>
+              <span style="flex:1">HSK 1</span>
+              <span style="font-size:12px;color:var(--color-neutral-600)">120 từ</span>
+            </label>
+            <label class="radio" style="padding:12px 0;border-bottom:1px solid var(--color-divider)">
+              <input type="radio" name="hsk-goal">
+              <span class="dot"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-300);flex-shrink:0;margin-right:2px"></span>
+              <span style="flex:1">HSK 2</span>
+              <span style="font-size:12px;color:var(--color-neutral-600)">150 từ</span>
+            </label>
+            <label class="radio" style="padding:12px 0;border-bottom:1px solid var(--color-divider)">
+              <input type="radio" name="hsk-goal" defaultChecked="">
+              <span class="dot"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-400);flex-shrink:0;margin-right:2px"></span>
+              <span style="flex:1">HSK 3</span>
+              <span style="font-size:12px;color:var(--color-neutral-600)">180 từ</span>
+            </label>
+            <label class="radio" style="padding:12px 0;border-bottom:1px solid var(--color-divider)">
+              <input type="radio" name="hsk-goal">
+              <span class="dot"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-500);flex-shrink:0;margin-right:2px"></span>
+              <span style="flex:1">HSK 4</span>
+              <span style="font-size:12px;color:var(--color-neutral-600)">300 từ</span>
+            </label>
+            <label class="radio" style="padding:12px 0;border-bottom:1px solid var(--color-divider)">
+              <input type="radio" name="hsk-goal">
+              <span class="dot"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-700);flex-shrink:0;margin-right:2px"></span>
+              <span style="flex:1">HSK 5</span>
+              <span style="font-size:12px;color:var(--color-neutral-600)">600 từ</span>
+            </label>
+            <label class="radio" style="padding:12px 0;border-bottom:none">
+              <input type="radio" name="hsk-goal">
+              <span class="dot"></span>
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-900);flex-shrink:0;margin-right:2px"></span>
+              <span style="flex:1">HSK 6</span>
+              <span style="font-size:12px;color:var(--color-neutral-600)">750 từ</span>
+            </label>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">Tóm tắt</h6>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin:14px 0 8px">
+            <span style="font-size:13px;color:var(--color-neutral-700)">Đã thuộc tính đến HSK 3</span>
+            <span style="font-family:var(--font-heading);font-weight:600;font-size:20px">35%</span>
+          </div>
+          <div style="height:8px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden;margin-bottom:8px">
+            <div style="width:35%;height:100%;background:var(--color-accent)"></div>
+          </div>
+          <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:26px">157 / 450 từ đã thuộc — còn 293 từ cần học để đạt HSK 3</div>
+
+          <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Lưu mục tiêu</button>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">03 · Từ vựng</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="height:100%;position:relative;box-sizing:border-box">
+        <div style="padding:54px 22px 74px;height:100%;overflow:auto;box-sizing:border-box">
+          <h2 style="margin:0 0 6px;font-size:26px">Từ vựng</h2>
+          <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:18px">148 từ · HSK 1–3</div>
+          <input class="input" placeholder="Tìm từ..." style="margin-bottom:14px">
+          <div class="seg" style="margin-bottom:8px;width:100%">
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk" defaultChecked=""><span>Tất cả</span></label>
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk"><span>HSK1</span></label>
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk"><span>HSK2</span></label>
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="hsk"><span>HSK3</span></label>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px">
+            <span class="tag tag-accent">Tất cả loại từ</span>
+            <span class="tag tag-outline">Danh từ</span>
+            <span class="tag tag-outline">Động từ</span>
+            <span class="tag tag-outline">Tính từ</span>
+          </div>
+          <div style="margin-top:14px">
+            <div class="scr-row">
+              <div style="width:40px;font-size:24px;font-family:var(--font-heading);flex-shrink:0">你好</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-style:italic;color:var(--color-accent-700)">nǐ hǎo</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">xin chào</div>
+              </div>
+              <span class="tag tag-accent">HSK1</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:40px;font-size:24px;font-family:var(--font-heading);flex-shrink:0">谢谢</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-style:italic;color:var(--color-accent-700)">xièxiè</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">cảm ơn</div>
+              </div>
+              <span class="tag tag-accent">HSK1</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:40px;font-size:24px;font-family:var(--font-heading);flex-shrink:0">时间</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-style:italic;color:var(--color-accent-700)">shíjiān</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">thời gian</div>
+              </div>
+              <span class="tag tag-accent">HSK1</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:40px;font-size:24px;font-family:var(--font-heading);flex-shrink:0">朋友</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-style:italic;color:var(--color-accent-700)">péngyou</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">bạn</div>
+              </div>
+              <span class="tag tag-accent-2">HSK2</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:40px;font-size:24px;font-family:var(--font-heading);flex-shrink:0">学习</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-style:italic;color:var(--color-accent-700)">xuéxí</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">học tập</div>
+              </div>
+              <span class="tag tag-accent-2">HSK2</span>
+            </div>
+            <div class="scr-row" style="border-bottom:none">
+              <div style="width:40px;font-size:24px;font-family:var(--font-heading);flex-shrink:0">经验</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px;font-style:italic;color:var(--color-accent-700)">jīngyàn</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">kinh nghiệm</div>
+              </div>
+              <span class="tag tag-neutral">HSK3</span>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--color-surface);border-top:1px solid var(--color-divider);display:flex">
+          <a href="#1a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 10.5V20h5v-6h2v6h5v-9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Tổng quan</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-accent-700)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c2-1.3 5-1.3 8 .5v13c-3-1.8-6-1.8-8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M20 5.5c-2-1.3-5-1.3-8 .5v13c3-1.8 6-1.8 8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span style="font-size:10px;font-weight:600">Từ vựng</span></a>
+          <a href="#3b" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-2.9 6.1M20 12v5.5h-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Ôn tập</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><span style="font-size:17px;font-family:var(--font-heading);line-height:1">文</span><span style="font-size:10px;margin-top:1px">Ngữ pháp</span></a>
+        </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">04 · Ôn tập (SRS)</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="height:100%;position:relative;box-sizing:border-box">
+        <div style="padding:54px 22px 76px;height:100%;box-sizing:border-box;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div class="scr-head" style="margin-bottom:0">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round"></path></svg>
+              <h3 style="margin:0;font-size:20px">Ôn tập</h3>
+            </div>
+            <div style="font-size:13px;color:var(--color-neutral-600)">3 / 12</div>
+          </div>
+          <div style="height:3px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden;margin-bottom:10px">
+            <div style="width:25%;height:100%;background:var(--color-accent)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span class="tag tag-accent">Từ vựng</span>
+            <div class="seg" style="width:auto">
+              <label class="seg-opt"><input type="radio" name="review-mode" defaultChecked=""><span>Xem chữ</span></label>
+              <label class="seg-opt"><input type="radio" name="review-mode"><span>Nghe trước</span></label>
+            </div>
+          </div>
+
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+            <div style="font-size:84px;font-family:var(--font-heading);line-height:1">学习</div>
+            <div style="font-size:22px;font-style:italic;color:var(--color-accent-700);margin-top:14px">xuéxí</div>
+            <div style="font-size:17px;color:var(--color-neutral-800);margin-top:6px">học, học tập</div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-bottom:16px">
+            <button class="btn btn-secondary" style="flex:1;height:52px;flex-direction:column;gap:2px">Quên</button>
+            <button class="btn" style="flex:1;height:52px;flex-direction:column;gap:2px;background:var(--color-accent-2-100);color:var(--color-accent-2-800)">Khó</button>
+            <button class="btn" style="flex:1;height:52px;flex-direction:column;gap:2px;background:var(--color-accent-100);color:var(--color-accent-800)">Tốt</button>
+            <button class="btn btn-primary" style="flex:1;height:52px;flex-direction:column;gap:2px">Dễ</button>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--color-surface);border-top:1px solid var(--color-divider);display:flex">
+          <a href="#1a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 10.5V20h5v-6h2v6h5v-9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Tổng quan</span></a>
+          <a href="#3a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c2-1.3 5-1.3 8 .5v13c-3-1.8-6-1.8-8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M20 5.5c-2-1.3-5-1.3-8 .5v13c3-1.8 6-1.8 8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span style="font-size:10px">Từ vựng</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-accent-700)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-2.9 6.1M20 12v5.5h-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px;font-weight:600">Ôn tập</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><span style="font-size:17px;font-family:var(--font-heading);line-height:1">文</span><span style="font-size:10px;margin-top:1px">Ngữ pháp</span></a>
+        </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">05 · Chi tiết từ</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 28px;height:100%;overflow:auto;box-sizing:border-box">
+          <svg width="9" height="16" viewBox="0 0 9 16"><path d="M8 1L1 8l7 7" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+          <div style="margin:20px 0 8px">
+            <div style="font-size:64px;font-family:var(--font-heading);line-height:1">经验</div>
+            <div style="font-size:20px;font-style:italic;color:var(--color-accent-700);margin-top:10px">jīngyàn</div>
+            <div style="font-size:16px;color:var(--color-neutral-800);margin-top:4px">kinh nghiệm</div>
+          </div>
+          <div style="display:flex;gap:8px;margin:14px 0 24px">
+            <span class="tag tag-accent">HSK3</span>
+            <span class="tag tag-neutral">danh từ</span>
+          </div>
+
+          <button class="btn btn-secondary" style="margin-bottom:28px">
+            <svg width="16" height="16" viewBox="0 0 24 24" style="margin-right:2px"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="var(--color-text)"></path><path d="M16 8a5 5 0 010 8" fill="none" stroke="var(--color-text)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+            Nghe phát âm
+          </button>
+
+          <h6 style="color:var(--color-neutral-600)">Thứ tự nét viết</h6>
+          <div style="display:flex;align-items:center;gap:16px;margin:12px 0 28px">
+            <div style="width:96px;height:96px;border:1px solid var(--color-divider);position:relative;flex-shrink:0">
+              <svg width="96" height="96" viewBox="0 0 96 96" style="position:absolute;top:0;left:0">
+                <line x1="48" y1="0" x2="48" y2="96" stroke="var(--color-divider)" stroke-dasharray="3 3"></line>
+                <line x1="0" y1="48" x2="96" y2="48" stroke="var(--color-divider)" stroke-dasharray="3 3"></line>
+              </svg>
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px;font-family:var(--font-heading);color:var(--color-neutral-300)">经</div>
+            </div>
+            <div>
+              <span class="tag tag-neutral">Sắp có</span>
+              <div style="font-size:13px;color:var(--color-neutral-700);margin-top:8px;max-width:180px">Hoạt ảnh thứ tự nét viết cho từng chữ Hán.</div>
+            </div>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">Ví dụ</h6>
+          <div class="card" style="margin-bottom:26px">
+            <div style="font-size:18px;font-family:var(--font-heading)">他有很多学习经验。</div>
+            <div style="font-size:13px;font-style:italic;color:var(--color-accent-700)">Tā yǒu hěn duō xuéxí jīngyàn.</div>
+            <div class="card-body">Anh ấy có nhiều kinh nghiệm học tập.</div>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">Ôn tập</h6>
+          <div class="scr-meta-row">
+            <span style="color:var(--color-neutral-700)">Lần ôn gần nhất</span>
+            <span>2 ngày trước</span>
+          </div>
+          <div class="scr-meta-row">
+            <span style="color:var(--color-neutral-700)">Lần ôn tiếp theo</span>
+            <span>16 ngày nữa</span>
+          </div>
+          <div class="scr-meta-row" style="border-bottom:none">
+            <span style="color:var(--color-neutral-700)">Độ dễ nhớ</span>
+            <span class="tag tag-accent">Tốt</span>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">06 · Tiến độ</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 28px;height:100%;overflow:auto;box-sizing:border-box">
+          <div class="scr-head">
+            <svg width="9" height="16" viewBox="0 0 9 16"><path d="M8 1L1 8l7 7" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            <h2 style="margin:0;font-size:26px">Tiến độ</h2>
+          </div>
+
+          <div class="card elev-sm" style="align-items:flex-start;margin:20px 0 26px">
+            <div class="card-kicker">Streak</div>
+            <div style="font-family:var(--font-heading);font-weight:600;font-size:38px">7 <span style="font-size:15px;font-weight:400;font-family:var(--font-body)">ngày liên tiếp</span></div>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">Theo cấp độ HSK</h6>
+          <div style="display:flex;flex-direction:column;gap:14px;margin:12px 0 28px">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>HSK 1</span><span style="color:var(--color-neutral-700)">104 / 120</span></div>
+              <div style="height:6px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden"><div style="width:87%;height:100%;background:var(--color-accent)"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>HSK 2</span><span style="color:var(--color-neutral-700)">48 / 150</span></div>
+              <div style="height:6px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden"><div style="width:32%;height:100%;background:var(--color-accent)"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span>HSK 3</span><span style="color:var(--color-neutral-700)">5 / 180</span></div>
+              <div style="height:6px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden"><div style="width:3%;height:100%;background:var(--color-accent)"></div></div>
+            </div>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">7 ngày qua</h6>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;height:90px;margin:16px 0 6px">
+            <div style="width:22px;height:40px;background:var(--color-accent-200);border-radius:2px"></div>
+            <div style="width:22px;height:70px;background:var(--color-accent-200);border-radius:2px"></div>
+            <div style="width:22px;height:20px;background:var(--color-accent-200);border-radius:2px"></div>
+            <div style="width:22px;height:90px;background:var(--color-accent);border-radius:2px"></div>
+            <div style="width:22px;height:50px;background:var(--color-accent-200);border-radius:2px"></div>
+            <div style="width:22px;height:80px;background:var(--color-accent-200);border-radius:2px"></div>
+            <div style="width:22px;height:30px;background:var(--color-accent-200);border-radius:2px"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-neutral-600)">
+            <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">07 · Ngữ pháp</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="height:100%;position:relative;box-sizing:border-box">
+        <div style="padding:54px 22px 74px;height:100%;overflow:auto;box-sizing:border-box">
+          <h2 style="margin:0 0 6px;font-size:26px">Ngữ pháp</h2>
+          <div style="font-size:13px;color:var(--color-neutral-700);margin-bottom:18px">5 điểm ngữ pháp · HSK 1–3</div>
+          <div class="seg" style="margin-bottom:8px;width:100%">
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="gp-hsk" defaultChecked=""><span>Tất cả</span></label>
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="gp-hsk"><span>HSK1</span></label>
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="gp-hsk"><span>HSK2</span></label>
+            <label class="seg-opt" style="flex:1;justify-content:center"><input type="radio" name="gp-hsk"><span>HSK3</span></label>
+          </div>
+          <div style="margin-top:14px">
+            <div class="scr-row">
+              <div style="width:56px;font-size:22px;font-family:var(--font-heading);flex-shrink:0">了</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px">Trợ từ hoàn thành / biến đổi</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">hành động đã xảy ra hoặc trạng thái đã đổi</div>
+              </div>
+              <span class="tag tag-accent">HSK1</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:56px;font-size:22px;font-family:var(--font-heading);flex-shrink:0">比</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px">Câu so sánh bằng 比</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">A 比 B + tính từ</div>
+              </div>
+              <span class="tag tag-accent-2">HSK2</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:56px;font-size:16px;font-family:var(--font-heading);flex-shrink:0">虽然…但是</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px">Câu nhượng bộ</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">tuy... nhưng...</div>
+              </div>
+              <span class="tag tag-accent-2">HSK2</span>
+            </div>
+            <div class="scr-row">
+              <div style="width:56px;font-size:22px;font-family:var(--font-heading);flex-shrink:0">把</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px">Câu chữ 把</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">đưa tân ngữ lên trước động từ</div>
+              </div>
+              <span class="tag tag-neutral">HSK3</span>
+            </div>
+            <div class="scr-row" style="border-bottom:none">
+              <div style="width:56px;font-size:22px;font-family:var(--font-heading);flex-shrink:0">被</div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:14px">Câu bị động bằng 被</div>
+                <div style="font-size:13px;color:var(--color-neutral-700)">chủ ngữ chịu tác động của hành động</div>
+              </div>
+              <span class="tag tag-neutral">HSK3</span>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--color-surface);border-top:1px solid var(--color-divider);display:flex">
+          <a href="#1a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 10.5V20h5v-6h2v6h5v-9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Tổng quan</span></a>
+          <a href="#3a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c2-1.3 5-1.3 8 .5v13c-3-1.8-6-1.8-8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M20 5.5c-2-1.3-5-1.3-8 .5v13c3-1.8 6-1.8 8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span style="font-size:10px">Từ vựng</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-2.9 6.1M20 12v5.5h-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Ôn tập</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-accent-700)"><span style="font-size:17px;font-family:var(--font-heading);line-height:1">文</span><span style="font-size:10px;font-weight:600;margin-top:1px">Ngữ pháp</span></a>
+        </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">08 · Chi tiết ngữ pháp</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 28px;height:100%;overflow:auto;box-sizing:border-box">
+          <svg width="9" height="16" viewBox="0 0 9 16"><path d="M8 1L1 8l7 7" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+          <div style="margin:20px 0 8px">
+            <div style="font-size:56px;font-family:var(--font-heading);line-height:1">把</div>
+            <div style="font-size:16px;color:var(--color-neutral-800);margin-top:10px">Câu chữ 把</div>
+          </div>
+          <div style="display:flex;gap:8px;margin:14px 0 24px">
+            <span class="tag tag-neutral">HSK3</span>
+            <span class="tag tag-accent-2">ngữ pháp</span>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">Cấu trúc</h6>
+          <div style="font-size:16px;font-family:var(--font-heading);margin:10px 0 22px">S + 把 + O + V + bổ ngữ / kết quả</div>
+
+          <h6 style="color:var(--color-neutral-600)">Giải thích</h6>
+          <p style="font-size:14px;line-height:1.65;color:var(--color-neutral-800);margin:10px 0 24px">把 đưa tân ngữ (O) lên trước động từ để nhấn mạnh O được xử lý ra sao. Câu luôn cần bổ ngữ hoặc thành phần chỉ kết quả sau động từ — không dùng 把 khi câu chỉ có động từ đơn.</p>
+
+          <h6 style="color:var(--color-neutral-600)">Ví dụ</h6>
+          <div class="card" style="margin-bottom:14px">
+            <div style="font-size:18px;font-family:var(--font-heading)">我把书放在桌子上。</div>
+            <div style="font-size:13px;font-style:italic;color:var(--color-accent-700)">Wǒ bǎ shū fàng zài zhuōzi shàng.</div>
+            <div class="card-body">Tôi để cuốn sách lên bàn.</div>
+          </div>
+          <div class="card" style="margin-bottom:26px">
+            <div style="font-size:18px;font-family:var(--font-heading)">他把作业写完了。</div>
+            <div style="font-size:13px;font-style:italic;color:var(--color-accent-700)">Tā bǎ zuòyè xiě wán le.</div>
+            <div class="card-body">Anh ấy đã viết xong bài tập.</div>
+          </div>
+
+          <h6 style="color:var(--color-neutral-600)">Ôn tập</h6>
+          <div class="scr-meta-row">
+            <span style="color:var(--color-neutral-700)">Lần ôn gần nhất</span>
+            <span>1 ngày trước</span>
+          </div>
+          <div class="scr-meta-row">
+            <span style="color:var(--color-neutral-700)">Lần ôn tiếp theo</span>
+            <span>4 ngày nữa</span>
+          </div>
+          <div class="scr-meta-row" style="border-bottom:none">
+            <span style="color:var(--color-neutral-700)">Độ dễ nhớ</span>
+            <span class="tag tag-accent-2">Khó</span>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">09 · Ôn tập — thẻ ngữ pháp, nghe trước</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="height:100%;position:relative;box-sizing:border-box">
+        <div style="padding:54px 22px 76px;height:100%;box-sizing:border-box;display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+            <div class="scr-head" style="margin-bottom:0">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round"></path></svg>
+              <h3 style="margin:0;font-size:20px">Ôn tập</h3>
+            </div>
+            <div style="font-size:13px;color:var(--color-neutral-600)">7 / 12</div>
+          </div>
+          <div style="height:3px;background:var(--color-neutral-200);border-radius:2px;overflow:hidden;margin-bottom:10px">
+            <div style="width:58%;height:100%;background:var(--color-accent)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span class="tag tag-accent-2">Ngữ pháp</span>
+            <div class="seg" style="width:auto">
+              <label class="seg-opt"><input type="radio" name="review-mode-2"><span>Xem chữ</span></label>
+              <label class="seg-opt"><input type="radio" name="review-mode-2" defaultChecked=""><span>Nghe trước</span></label>
+            </div>
+          </div>
+
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+            <button class="btn btn-icon" style="width:64px;height:64px;border-radius:50%;background:var(--color-accent-100);margin-bottom:18px">
+              <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 9v6h4l5 5V4L8 9H4z" fill="var(--color-accent-800)"></path><path d="M16 8a5 5 0 010 8" fill="none" stroke="var(--color-accent-800)" stroke-width="1.6" stroke-linecap="round"></path></svg>
+            </button>
+            <div style="font-size:15px;color:var(--color-neutral-800)">Nghe câu ví dụ, đoán cấu trúc</div>
+            <div style="font-size:13px;color:var(--color-neutral-600);margin-top:6px">把 · HSK3</div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-bottom:16px">
+            <button class="btn btn-secondary" style="flex:1;height:52px;flex-direction:column;gap:2px">Quên</button>
+            <button class="btn" style="flex:1;height:52px;flex-direction:column;gap:2px;background:var(--color-accent-2-100);color:var(--color-accent-2-800)">Khó</button>
+            <button class="btn" style="flex:1;height:52px;flex-direction:column;gap:2px;background:var(--color-accent-100);color:var(--color-accent-800)">Tốt</button>
+            <button class="btn btn-primary" style="flex:1;height:52px;flex-direction:column;gap:2px">Dễ</button>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--color-surface);border-top:1px solid var(--color-divider);display:flex">
+          <a href="#1a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 11.5L12 4l8 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path><path d="M6 10.5V20h5v-6h2v6h5v-9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px">Tổng quan</span></a>
+          <a href="#3a" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c2-1.3 5-1.3 8 .5v13c-3-1.8-6-1.8-8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path><path d="M20 5.5c-2-1.3-5-1.3-8 .5v13c3-1.8 6-1.8 8-.5v-13z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg><span style="font-size:10px">Từ vựng</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-accent-700)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-2.9 6.1M20 12v5.5h-5.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:10px;font-weight:600">Ôn tập</span></a>
+          <a href="#" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--color-neutral-600)"><span style="font-size:17px;font-family:var(--font-heading);line-height:1">文</span><span style="font-size:10px;margin-top:1px">Ngữ pháp</span></a>
+        </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">10 · Kết quả ôn tập</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 28px;height:100%;overflow:auto;box-sizing:border-box;display:flex;flex-direction:column">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+            <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-600);margin-bottom:10px">Buổi ôn tập</div>
+            <h1 style="font-size:28px;margin:0 0 28px">Hoàn thành!</h1>
+
+            <div style="display:flex;gap:12px;width:100%;margin-bottom:24px">
+              <div class="card" style="flex:1">
+                <div class="card-kicker">Đã ôn</div>
+                <div style="font-family:var(--font-heading);font-weight:600;font-size:26px">12</div>
+                <div class="card-body">thẻ</div>
+              </div>
+              <div class="card" style="flex:1">
+                <div class="card-kicker">Nhớ tốt</div>
+                <div style="font-family:var(--font-heading);font-weight:600;font-size:26px">10</div>
+                <div class="card-body">/ 12 thẻ</div>
+              </div>
+            </div>
+
+            <div style="width:100%;font-size:13px;color:var(--color-neutral-700);margin-bottom:6px;display:flex;justify-content:space-between">
+              <span>Từ vựng</span><span>8 thẻ</span>
+            </div>
+            <div style="width:100%;font-size:13px;color:var(--color-neutral-700);margin-bottom:24px;display:flex;justify-content:space-between">
+              <span>Ngữ pháp</span><span>4 thẻ</span>
+            </div>
+
+            <div style="width:100%;font-size:13px;color:var(--color-neutral-700);margin-bottom:4px;display:flex;justify-content:space-between">
+              <span>Streak</span><span>8 ngày liên tiếp</span>
+            </div>
+            <div style="width:100%;font-size:13px;color:var(--color-neutral-700);margin-bottom:32px;display:flex;justify-content:space-between">
+              <span>Ôn tiếp theo</span><span>16 giờ nữa</span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Về Tổng quan</button>
+        </div>
+      </x-import>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px;flex-shrink:0">
+      <h6 style="color:var(--color-neutral-600);margin:0">11 · Cài đặt</h6>
+      <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="402,874">
+        <div style="padding:54px 22px 28px;height:100%;overflow:auto;box-sizing:border-box">
+          <svg width="9" height="16" viewBox="0 0 9 16"><path d="M8 1L1 8l7 7" fill="none" stroke="var(--color-text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <h2 style="margin:18px 0 26px;font-size:26px">Cài đặt</h2>
+
+          <a href="#2b" style="display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--color-divider);color:var(--color-text)">
+            <span style="font-size:15px">Mục tiêu HSK</span>
+            <span style="display:flex;align-items:center;gap:6px;color:var(--color-neutral-600);font-size:14px">HSK 3
+              <svg width="7" height="12" viewBox="0 0 9 16"><path d="M1 1l7 7-7 7" fill="none" stroke="var(--color-neutral-500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </span>
+          </a>
+
+          <div style="padding:16px 0;border-bottom:1px solid var(--color-divider)">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <span style="font-size:15px">Nhắc ôn tập hàng ngày</span>
+              <div class="seg" style="width:auto">
+                <label class="seg-opt"><input type="radio" name="notif"><span>Tắt</span></label>
+                <label class="seg-opt"><input type="radio" name="notif" defaultChecked=""><span>Bật</span></label>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:13px;color:var(--color-neutral-700)">Giờ nhắc</span>
+              <input class="input" type="time" value="20:00" style="width:110px">
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--color-divider)">
+            <span style="font-size:15px">Chế độ tối</span>
+            <div class="seg" style="width:auto">
+              <label class="seg-opt"><input type="radio" name="dark" defaultChecked=""><span>Tắt</span></label>
+              <label class="seg-opt"><input type="radio" name="dark"><span>Bật</span></label>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;padding:16px 0;font-size:13px;color:var(--color-neutral-600)">
+            <span>Phiên bản</span>
+            <span>1.0.0</span>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>

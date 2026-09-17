@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>HSK data pipeline — duyệt dữ liệu</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; padding: 16px 24px 60px; background: #f7f7f8; }
+  h1 { font-size: 18px; margin: 0 0 12px; }
+  .bar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+  select, button, input[type=text] { font-size: 14px; padding: 5px 8px; border-radius: 6px; border: 1px solid #ccc; background: #fff; }
+  button { cursor: pointer; }
+  button.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+  button.ghost { background: #fff; }
+  button:disabled { opacity: .4; cursor: default; }
+  #overview { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 16px; font-size: 13px; }
+  .ov-block { background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: 8px 12px; min-width: 160px; }
+  .ov-block b { display: block; margin-bottom: 4px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; overflow: hidden; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; vertical-align: top; font-size: 13px; }
+  th { background: #f0f1f3; position: sticky; top: 0; }
+  .hanzi { font-size: 20px; }
+  .chips { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+  .chip { font-size: 11px; padding: 1px 6px; border-radius: 10px; border: 1px solid #bbb; cursor: pointer; background: #fafafa; }
+  .chip:hover { background: #e8f0fe; border-color: #2563eb; }
+  .chip.origin-llm { border-color: #a855f7; }
+  textarea, input.edit { width: 100%; box-sizing: border-box; font-size: 13px; padding: 4px; border: 1px solid #ccc; border-radius: 4px; }
+  textarea { resize: vertical; min-height: 32px; }
+  .status { font-size: 11px; padding: 1px 6px; border-radius: 8px; }
+  .status-missing { background: #fde2e2; color: #9b1c1c; }
+  .status-auto { background: #e2f0fd; color: #1e5a96; }
+  .status-draft { background: #fef3c7; color: #92620a; }
+  .status-edited { background: #fef3c7; color: #92620a; }
+  .status-approved { background: #dcfce7; color: #157347; }
+  .row-actions { display: flex; gap: 6px; margin-top: 4px; }
+  .pager { display: flex; gap: 8px; align-items: center; margin-top: 10px; font-size: 13px; }
+  .dirty { outline: 2px solid #f59e0b; }
+  .notes { color: #777; font-size: 11px; }
+  .llm-bar { background: #fff; border: 1px solid #e2e2e2; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #llmStatus { font-size: 12px; }
+  #llmStatus.ok { color: #157347; }
+  #llmStatus.bad { color: #9b1c1c; }
+  #llmResult { font-size: 13px; margin-left: 6px; }
+  #batchLog { font-size: 12px; color: #555; max-height: 90px; overflow: auto; background: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 6px 8px; margin-top: 6px; width: 100%; }
+  .warn-chip { display: inline-block; background: #fef3c7; color: #92620a; border-radius: 6px; padding: 2px 6px; font-size: 11px; margin-top: 3px; }
+</style>
+</head>
+<body>
+<h1>HSK data pipeline — duyệt dữ liệu</h1>
+
+<div id="overview"></div>
+
+<div class="llm-bar">
+  <b>LM Studio</b>
+  <span id="llmStatus">đang kiểm tra…</span>
+  <select id="llmModel"></select>
+  <select id="llmKind">
+    <option value="meaning_vi">Nghĩa tiếng Việt</option>
+    <option value="han_viet:word">Hán Việt (từ nhiều chữ)</option>
+    <option value="han_viet:char">Hán Việt (từng chữ)</option>
+    <option value="example">Câu ví dụ</option>
+  </select>
+  <label>Cấp <select id="llmLevel"><option value="1">HSK1</option><option value="2">HSK2</option><option value="3">HSK3</option></select></label>
+  <label>Số lượng <input type="text" id="llmSize" value="20" style="width:50px"></label>
+  <button id="llmRun" class="primary">Chạy LLM</button>
+  <span id="llmResult"></span>
+  <div id="batchLog"></div>
+</div>
+
+<div class="llm-bar">
+  <b>Xuất gói</b>
+  <button id="exportRun" class="primary">Xuất dist/packs + manifest.json</button>
+  <span id="exportResult"></span>
+  <div id="packInfo" style="width:100%;font-size:12px;color:#555;"></div>
+</div>
+
+<div class="bar">
+  <label>Cấp <select id="level"><option value="1">HSK1</option><option value="2">HSK2</option><option value="3">HSK3</option></select></label>
+  <label>Loại <select id="entity"><option value="words">Từ</option><option value="chars">Chữ</option></select></label>
+  <label id="fieldWrap">Trường <select id="field">
+    <option value="meaning_vi">Nghĩa tiếng Việt</option>
+    <option value="han_viet">Hán Việt</option>
+    <option value="example">Ví dụ</option>
+  </select></label>
+  <label>Trạng thái <select id="status">
+    <option value="">— tất cả —</option>
+    <option value="missing">missing</option>
+    <option value="auto">auto</option>
+    <option value="draft">draft</option>
+    <option value="edited">edited</option>
+    <option value="approved">approved</option>
+  </select></label>
+  <button id="refresh" class="ghost">Tải lại</button>
+  <button id="approveAllAuto" class="primary">Duyệt mọi mục auto ở trang này</button>
+</div>
+
+<table id="tbl"><thead></thead><tbody></tbody></table>
+<div class="pager">
+  <button id="prev">‹ Trước</button>
+  <span id="pageInfo"></span>
+  <button id="next">Sau ›</button>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let state = { offset: 0, limit: 30, total: 0 };
+
+async function api(path, opts) {
+  const res = await fetch(path, opts);
+  if (!res.ok) { alert('Lỗi: ' + res.status + ' ' + await res.text()); throw new Error('api error'); }
+  return res.json();
+}
+
+function statusBadge(s) { return `<span class="status status-${s}">${s}</span>`; }
+
+async function loadOverview() {
+  const ov = await api('/api/overview');
+  const block = (title, rows) => {
+    const byLevel = {};
+    rows.forEach(r => { (byLevel[r.hsk_level] ??= []).push(`${r.status}:${r.c}`); });
+    const lines = Object.entries(byLevel).map(([lvl, parts]) => `HSK${lvl} — ${parts.join(', ')}`).join('<br>');
+    return `<div class="ov-block"><b>${title}</b>${lines || '(chưa có dữ liệu)'}</div>`;
+  };
+  $('overview').innerHTML =
+    block('Từ · nghĩa tiếng Việt', ov.words_meaning) +
+    block('Từ · Hán Việt', ov.words_han_viet) +
+    block('Từ · ví dụ', ov.words_example) +
+    block('Chữ · Hán Việt', ov.chars_han_viet) +
+    `<div class="ov-block"><b>Đa âm cần chọn pinyin</b>${ov.words_ambiguous_pinyin.map(r=>`HSK${r.hsk_level}: ${r.c}`).join('<br>') || '0'}</div>`;
+}
+
+function fieldStatusKey(field) { return { meaning_vi: 'meaning_status', han_viet: 'han_viet_status', example: 'example_status' }[field]; }
+
+async function loadRows() {
+  const entity = $('entity').value;
+  const level = $('level').value;
+  const status = $('status').value;
+  const field = $('field').value;
+  $('fieldWrap').style.display = entity === 'words' ? '' : 'none';
+
+  let data;
+  if (entity === 'words') {
+    data = await api(`/api/words?level=${level}&field=${field}${status ? `&status=${status}` : ''}&limit=${state.limit}&offset=${state.offset}`);
+    renderWords(data.items, field);
+  } else {
+    data = await api(`/api/chars?level=${level}${status ? `&status=${status}` : ''}&limit=${state.limit}&offset=${state.offset}`);
+    renderChars(data.items);
+  }
+  state.total = data.total;
+  $('pageInfo').textContent = `${state.offset + 1}–${Math.min(state.offset + state.limit, state.total)} / ${state.total}`;
+  $('prev').disabled = state.offset === 0;
+  $('next').disabled = state.offset + state.limit >= state.total;
+}
+
+function chipRow(candidates, onPick) {
+  if (!candidates || !candidates.length) return '';
+  return `<div class="chips">${candidates.map(c =>
+    `<span class="chip origin-${c.origin}" title="${c.origin}" data-value="${encodeURIComponent(c.value)}">${c.value}</span>`
+  ).join('')}</div>`;
+}
+
+function renderWords(items, field) {
+  const statusKey = fieldStatusKey(field);
+  $('tbl').querySelector('thead').innerHTML =
+    `<tr><th>Chữ</th><th>Pinyin</th><th>${field === 'example' ? 'Ví dụ (zh / pinyin / vi)' : field === 'han_viet' ? 'Hán Việt' : 'Nghĩa tiếng Việt'}</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr>`;
+  const tbody = $('tbl').querySelector('tbody');
+  tbody.innerHTML = '';
+  for (const w of items) {
+    const tr = document.createElement('tr');
+    tr.dataset.id = w.id;
+    const pinyinCands = chipRow(w.candidates.pinyin, 'pinyin');
+    let valueCell;
+    if (field === 'example') {
+      valueCell = `<textarea data-f="example_zh" placeholder="câu ví dụ (chữ Hán)">${w.example_zh || ''}</textarea>
+                   <input class="edit" data-f="example_pinyin" placeholder="pinyin" value="${(w.example_pinyin||'').replace(/"/g,'&quot;')}">
+                   <textarea data-f="example_vi" placeholder="dịch tiếng Việt">${w.example_vi || ''}</textarea>`;
+    } else if (field === 'han_viet') {
+      valueCell = `<input class="edit" data-f="han_viet" value="${(w.han_viet||'').replace(/"/g,'&quot;')}">`;
+    } else {
+      valueCell = `<textarea data-f="meaning_vi">${w.meaning_vi || ''}</textarea>${chipRow(w.candidates.meaning_vi)}`;
+    }
+    tr.innerHTML = `
+      <td class="hanzi">${w.simplified}${w.traditional && w.traditional !== w.simplified ? ` <span style="font-size:12px;color:#888">(${w.traditional})</span>` : ''}</td>
+      <td>${w.pinyin}${pinyinCands}</td>
+      <td>${valueCell}</td>
+      <td>${statusBadge(w[statusKey])}${(w.llm_warnings||[]).map(x=>`<div class="warn-chip">⚠ ${x}</div>`).join('')}</td>
+      <td class="notes">${w.notes || ''}</td>
+      <td><div class="row-actions">
+        <button class="save ghost">Lưu</button>
+        <button class="approve primary">Duyệt</button>
+      </div></td>`;
+    tbody.appendChild(tr);
+
+    tr.querySelectorAll('.chip').forEach(chip => chip.onclick = () => {
+      const val = decodeURIComponent(chip.dataset.value);
+      const targetField = field === 'pinyin' ? 'pinyin' : (chip.parentElement.previousElementSibling?.dataset.f || (field === 'han_viet' ? 'han_viet' : 'meaning_vi'));
+      const input = tr.querySelector(`[data-f="${field === 'meaning_vi' ? 'meaning_vi' : (chip.closest('td').querySelector('[data-f]')?.dataset.f)}"]`)
+        || tr.querySelector('[data-f]');
+      if (input) { input.value = val; input.classList.add('dirty'); }
+    });
+
+    tr.querySelector('.save').onclick = () => saveWord(tr, field, false);
+    tr.querySelector('.approve').onclick = () => saveWord(tr, field, true);
+  }
+}
+
+async function saveWord(tr, field, approve) {
+  const id = tr.dataset.id;
+  const patch = {};
+  tr.querySelectorAll('[data-f]').forEach(el => { patch[el.dataset.f] = el.value; });
+  if (approve) patch[fieldStatusKey(field)] = 'approved';
+  await api(`/api/words/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(patch) });
+  await loadRows();
+  await loadOverview();
+}
+
+function renderChars(items) {
+  $('tbl').querySelector('thead').innerHTML = `<tr><th>Chữ</th><th>Phồn thể</th><th>Hán Việt</th><th>Trạng thái</th><th></th></tr>`;
+  const tbody = $('tbl').querySelector('tbody');
+  tbody.innerHTML = '';
+  for (const c of items) {
+    const tr = document.createElement('tr');
+    tr.dataset.char = c.char;
+    tr.innerHTML = `
+      <td class="hanzi">${c.char}</td>
+      <td class="hanzi">${c.traditional !== c.char ? c.traditional : ''}</td>
+      <td><input class="edit" data-f="han_viet" value="${(c.han_viet||'').replace(/"/g,'&quot;')}">${chipRow(c.candidates)}</td>
+      <td>${statusBadge(c.han_viet_status)}${(c.llm_warnings||[]).map(x=>`<div class="warn-chip">⚠ ${x}</div>`).join('')}</td>
+      <td><div class="row-actions"><button class="save ghost">Lưu</button><button class="approve primary">Duyệt</button></div></td>`;
+    tbody.appendChild(tr);
+    tr.querySelectorAll('.chip').forEach(chip => chip.onclick = () => {
+      tr.querySelector('[data-f="han_viet"]').value = decodeURIComponent(chip.dataset.value);
+    });
+    tr.querySelector('.save').onclick = () => saveChar(tr, false);
+    tr.querySelector('.approve').onclick = () => saveChar(tr, true);
+  }
+}
+
+async function saveChar(tr, approve) {
+  const ch = tr.dataset.char;
+  const patch = { han_viet: tr.querySelector('[data-f="han_viet"]').value };
+  if (approve) patch.han_viet_status = 'approved';
+  await api(`/api/chars/${encodeURIComponent(ch)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(patch) });
+  await loadRows();
+  await loadOverview();
+}
+
+async function approveAllAutoOnPage() {
+  const entity = $('entity').value;
+  const field = $('field').value;
+  const rows = [...$('tbl').querySelectorAll('tbody tr')];
+  for (const tr of rows) {
+    const badge = tr.querySelector('.status');
+    if (!badge || badge.textContent !== 'auto') continue;
+    if (entity === 'words') await saveWord(tr, field, true);
+    else await saveChar(tr, true);
+  }
+  await loadRows();
+  await loadOverview();
+}
+
+$('refresh').onclick = () => { state.offset = 0; loadRows(); };
+$('level').onchange = () => { state.offset = 0; loadRows(); };
+$('entity').onchange = () => { state.offset = 0; loadRows(); };
+$('field').onchange = () => { state.offset = 0; loadRows(); };
+$('status').onchange = () => { state.offset = 0; loadRows(); };
+$('prev').onclick = () => { state.offset = Math.max(0, state.offset - state.limit); loadRows(); };
+$('next').onclick = () => { state.offset += state.limit; loadRows(); };
+$('approveAllAuto').onclick = approveAllAutoOnPage;
+
+async function loadLlmModels() {
+  const status = $('llmStatus');
+  try {
+    const data = await fetch('/api/llm/models').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    status.textContent = `kết nối OK (${data.models.length} model)`;
+    status.className = 'ok';
+    $('llmModel').innerHTML = data.models.map(m => `<option value="${m}">${m}</option>`).join('');
+    if (data.default) $('llmModel').value = data.default;
+  } catch (e) {
+    status.textContent = 'không kết nối được LM Studio ở 127.0.0.1:1234 — mở LM Studio và load model rồi bấm lại';
+    status.className = 'bad';
+  }
+}
+
+function logBatch(text) {
+  const el = $('batchLog');
+  el.textContent = text + '\n' + el.textContent;
+}
+
+async function runLlmBatch() {
+  const [kind, entityType] = $('llmKind').value.split(':');
+  const level = parseInt($('llmLevel').value, 10);
+  const size = parseInt($('llmSize').value, 10) || 20;
+  const model = $('llmModel').value;
+  if (!model) { alert('Chưa chọn model / chưa kết nối LM Studio'); return; }
+
+  $('llmRun').disabled = true;
+  $('llmResult').textContent = 'đang chạy…';
+  try {
+    const res = await fetch('/api/batches/run', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kind, entity_type: entityType || 'word', level, size, model }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || res.status);
+    $('llmResult').textContent = `xong: ${data.processed} mục, ${data.warnings} cảnh báo, ${data.errors} lỗi (batch #${data.batch_id})`;
+    logBatch(`#${data.batch_id} ${kind}${entityType ? ':' + entityType : ''} HSK${level} — ${data.processed} mục, ${data.warnings} cảnh báo, ${data.errors} lỗi`);
+    await loadOverview();
+    await loadRows();
+  } catch (e) {
+    $('llmResult').textContent = 'lỗi: ' + e.message;
+  } finally {
+    $('llmRun').disabled = false;
+  }
+}
+
+$('llmRun').onclick = runLlmBatch;
+
+async function loadPackInfo() {
+  try {
+    const rows = await api('/api/pack_versions');
+    if (!rows.length) { $('packInfo').textContent = 'chưa xuất gói nào.'; return; }
+    $('packInfo').textContent = rows.map(r => {
+      const counts = JSON.parse(r.counts_json || '{}');
+      return `HSK${r.level} v${r.version} — ${counts.words_included ?? '?'} từ, ${counts.chars_with_han_viet ?? '?'} chữ có Hán Việt (xuất lúc ${r.exported_at})`;
+    }).join(' | ');
+  } catch (e) { /* ignore */ }
+}
+
+async function runExport() {
+  $('exportRun').disabled = true;
+  $('exportResult').textContent = 'đang xuất…';
+  try {
+    const reports = await api('/api/export', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ levels: [1, 2, 3] }),
+    });
+    $('exportResult').textContent = reports.map(r =>
+      `HSK${r.level} v${r.version}${r.changed ? ' (đổi)' : ' (không đổi)'}: ${r.words_included} từ (bỏ ${r.words_skipped}), ${r.chars_with_han_viet} chữ có Hán Việt`
+    ).join(' | ');
+    await loadPackInfo();
+  } catch (e) {
+    $('exportResult').textContent = 'lỗi: ' + e.message;
+  } finally {
+    $('exportRun').disabled = false;
+  }
+}
+$('exportRun').onclick = runExport;
+
+loadLlmModels();
+loadOverview();
+loadRows();
+loadPackInfo();
+</script>
+</body>
+</html>

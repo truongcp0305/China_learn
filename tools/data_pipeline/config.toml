@@ -1,0 +1,65 @@
+[llm]
+base_url = "http://127.0.0.1:1234/v1"
+default_model = "qwen/qwen3.5-9b"
+temperature = 0.2
+timeout_seconds = 120
+max_retries = 2
+thinking = false            # Qwen "think" toggle, passed via chat template kwargs when true
+
+[server]
+host = "127.0.0.1"
+port = 8765
+serve_packs_on_lan = false  # when true, also binds 0.0.0.0 but only /manifest.json and /packs/* are exposed
+
+[paths]
+raw_dir = "data/raw"
+db_path = "data/master.sqlite"
+backups_dir = "data/backups"
+snapshots_dir = "data/snapshots"
+dist_dir = "dist"
+
+# Every external source is pinned to a commit/tag so re-fetching is
+# reproducible. Bump the "ref" value deliberately (`cli fetch --update`)
+# rather than silently tracking a moving branch.
+
+[[sources]]
+name = "hsk_syllabus_2025"
+repo = "krmanik/HSK-3.0"
+ref = "182692ce5a11bc30bdc771835d2f0f27491c25de"
+license = "Derived from the official MOE/CTI HSK 3.0 syllabus; see repo License.md"
+# Files fetched per level, relative to the repo root:
+#   New HSK (2025)/HSK Words/HSK_Level_{n}_words.txt
+#   New HSK (2025)/HSK Grammar/HSK {n}.txt
+#   New HSK (2025)/HSK Hanzi/HSK_Level_{n}_hanzi.txt
+#   New HSK (2025)/HSK Handwritten/HSK_Level_{1-2,3,4,5,6,7-9}_handwritten.txt
+
+[[sources]]
+name = "complete_hsk_vocabulary"
+repo = "drkameleon/complete-hsk-vocabulary"
+ref = "7ac65bf1a6387d35f1ade478906172a19311c7f9"
+license = "MIT"
+# complete.json (repo root) holds every word across HSK 2.0 + 3.0 with pinyin/pos/meanings.
+
+[[sources]]
+name = "cvdict"
+repo = "ph0ngp/CVDICT"
+ref = "c379d909e308343a247e51619f7839a2060a271c"
+license = "CC BY-SA 4.0"
+file = "CVDICT.u8"
+
+[[sources]]
+name = "sinov"
+repo = "evotone/sinov"
+ref = "a3b725006dab1fb53516c1fd28d52a492750f5e7"
+license = "UNSPECIFIED - personal use only, do not ship without contacting author or swapping source"
+file = "sino-vietnamese-readings.csv"
+
+[[sources]]
+name = "cc_cedict"
+url = "https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz"
+license = "CC BY-SA 4.0"
+
+[[sources]]
+name = "unihan"
+url = "https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip"
+license = "Unicode License (attribution required)"

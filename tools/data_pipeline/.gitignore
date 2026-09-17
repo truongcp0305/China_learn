@@ -1,0 +1,8 @@
+.venv/
+data/raw/
+data/master.sqlite
+data/master.sqlite-*
+data/backups/
+dist/
+__pycache__/
+*.pyc
